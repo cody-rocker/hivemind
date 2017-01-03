@@ -1,0 +1,28 @@
+<!doctype html>
+<!--
+  - This page is shown when the extension button is clicked, because the
+  - "browser_action" field in manifest.json contains the "default_popup" key
+  - with value "popup.html".
+ -->
+<html>
+<head>
+    <title>HiveMind Popup</title>
+    <link rel="stylesheet" type="text/css" href="css/global.css">
+    <link rel="stylesheet" type="text/css" href="css/popup.css">
+    <link rel="stylesheet" type="text/css" href="css/icomoon.css">
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/popup.js"></script>
+</head>
+<body>
+    <div id="toolbar" class="shadow">
+        <img id="logo" src="icons/logo-small.png" class="left">
+        <div id="options" class="right" title="Options">
+            <span class="icon-cog"></span>
+        </div>
+    </div>
+    <div class="container">
+        <div id="blocked-posts"></div>
+    </div>
+    <div id="status"></div>
+</body>
+</html>
