@@ -1,9 +1,0 @@
-# Jquery sources
-jquery/
-
-# KDE index
-.directory
-
-#GIMP files
-assets/
-*.xcf
