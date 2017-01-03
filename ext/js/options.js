@@ -16,6 +16,7 @@ var textArea = document.getElementById('filters');
 loadFilters();
 
 var reminderText = $('#reminder');
+
 // add click event listeners
 toggleDetail.addEventListener('click', function() {
     reminderText.slideUp(200);
