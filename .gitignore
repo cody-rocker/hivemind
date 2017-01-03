@@ -2,4 +2,5 @@
 .directory
 
 #GIMP files
+assets/
 *.xcf
