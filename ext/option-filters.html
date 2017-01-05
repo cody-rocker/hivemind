@@ -1,0 +1,18 @@
+<!doctype html>
+<div>
+    <p id="helptext">Filter posts with titles containing the following list of keywords. Proper formatting is important. Values must be separated by a comma w/ no whitespace.</p>
+    <p id="extras">(<span id="toggle-example">see&nbspexample</span>)&nbsp(<span id="toggle-detail">more&nbspinfo</span>)</p>
+    <h2 id="label">Set keywords (or phrases) to filter here:</h2>
+    <div id="custom-filters" class="container">
+        <textarea id="filters" cols="112" rows="15" placeholder="example: kittens,dickbutt,Javert,RIP ..."></textarea>
+        <br>
+        <div id="btn-group">
+            <button class="submit">Save</button>
+            <button class="reset" title="Clear filters from local stroage">Reset</button>
+            <span id="alert" class="right"></span>
+        </div>
+    </div>
+    <p id="reminder">Don't forget to save your changes!</p>
+    <p id="detail">Filter operates on post titles using lazy/fuzzy comparison; Allows partial matches of words containing substrings. eg: "." matches "..."</p>
+    <p id="example">Example Filters: kittens,dickbutt,Javert,RIP,test,ignore</p>
+</div>

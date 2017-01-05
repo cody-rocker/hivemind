@@ -43,10 +43,10 @@ function HiddenPost(obj) {
     var _img = document.createElement('img');
     var _postUrl = document.createElement('span');
 
+    _img.title = 'Click to open in ' + _targetTab;
     _img.src = obj.imgUrl;
     _img.style.display = 'none';
-    _img.title = 'Click to open in ' + _targetTab;
-    _postUrl.className = 'hide';  //TODO: make this configurable opt
+    _postUrl.hidden = true;  //TODO: make this configurable opt
     _postUrl.appendChild(document.createTextNode(obj.postUrl));
     _title.appendChild(document.createTextNode(obj.title));
 

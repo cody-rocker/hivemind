@@ -1,8 +1,4 @@
 <!doctype html>
-<!--
-  - This is the options page. It can be accessed via the "chrome://extensions"
-  - menu or by clicking the cog-icon in the HiveMind popup.
- -->
 <html>
 <head>
     <title>HiveMind Options</title>
@@ -12,24 +8,18 @@
     <link rel="stylesheet" type="text/css" href="css/icomoon.css">
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/option-filters.js"></script>
 </head>
 <body>
     <header class="shadow">
         <div class="wrap">
             <nav id="main-nav" class="right">
+                <!-- TODO: set these up in JS with an XML/JSON file -->
                 <ul id="social-links">
-                    <li class="social"><a href="https://github.com/cody-rocker" data-toggle="tooltip" data-placement="bottom">
-                        <span class="icon-github" aria-hidden="true" title="Github"></span>
-                    </a></li>
-                    <li class="social"><a href="https://twitter.com/cody_rocker" data-toggle="tooltip" data-placement="bottom">
-                        <span class="icon-twitter" aria-hidden="true" title="Twitter"></span>
-                    </a></li>
-                    <li class="social"><a href="https://plus.google.com/116380484898555498106/" data-toggle="tooltip" data-placement="bottom">
-                        <span class="icon-google-plus" aria-hidden="true" title="Google+"S></span>
-                    </a></li>
-                    <li class="social"><a href="https://www.linkedin.com/in/cody-rocker-7021a5103" data-toggle="tooltip" data-placement="bottom">
-                        <span class="icon-linkedin" aria-hidden="true" title="LinkedIn"></span>
-                    </a></li>
+                    <li class="social"><a href="https://github.com/cody-rocker" data-toggle="tooltip" data-placement="bottom"><span class="icon-github" aria-hidden="true" title="Github"></span></a></li>
+                    <li class="social"><a href="https://twitter.com/cody_rocker" data-toggle="tooltip" data-placement="bottom"><span class="icon-twitter" aria-hidden="true" title="Twitter"></span></a></li>
+                    <li class="social"><a href="https://plus.google.com/116380484898555498106/" data-toggle="tooltip" data-placement="bottom"><span class="icon-google-plus" aria-hidden="true" title="Google+"S></span></a></li>
+                    <li class="social"><a href="https://www.linkedin.com/in/cody-rocker-7021a5103" data-toggle="tooltip" data-placement="bottom"><span class="icon-linkedin" aria-hidden="true" title="LinkedIn"></span></a></li>
                 </ul>
             </nav>
             <a class="left logo" href="https://cody-rocker.github.io/hivemind"><img src="icons/logo.png"></a>
@@ -37,43 +27,18 @@
     </header>
 
     <div id="dynamic-content" class="wrap container">
-        <div id="tabpages">
-            <li data-scripts="option-general.js"><a href="option-general.html"></a></li>
-            <li data-scripts="option-filters.js"><a href="option-filters.html"></a></li>
-        </div>
-
-        <p id="helptext">Filter posts with titles containing the following list of keywords. Proper formatting is important. Values must be separated by a comma w/ no whitespace.</p>
-        <p id="extras">(<span id="toggle-example">see&nbspexample</span>)&nbsp(<span id="toggle-detail">more&nbspinfo</span>)</p>
-        <h2 id="label">Set keywords (or phrases) to filter here:</h2>
-        <div id="custom-filters" class="container">
-            <textarea id="filters" cols="112" rows="15" placeholder="example: kittens,dickbutt,Javert,RIP ..."></textarea>
-            <br>
-            <div id="btn-group">
-                <button class="submit">Save</button>
-                <button class="reset" title="Clear filters from local stroage">Reset</button>
-                <span id="alert" class="right"></span>
+        <div id="tabs">
+            <ul>
+                <li><a href="#options-general">General</a></li>
+                <li><a href="#options-filters">Filters</a></li>
+            </ul>
+            <div id="tabpages">
+                <div id="options-general"></div>
+                <div id="options-filters"></div>
             </div>
         </div>
-        <p id="reminder">Don't forget to save your changes!</p>
-        <p id="detail">Filter operates on post titles using lazy/fuzzy comparison; Allows partial matches of words containing substrings. eg: "." matches "..."</p>
-        <p id="example">Example Filters: kittens,dickbutt,Javert,RIP,test,ignore</p>
     </div>
-
-    <!-- NOTE: All these commented elements are artifacts of the sample I was
-      -        using to learn how to structure this project. Some of them may
-      -        still be useful. Check carefully before deleting.
-     -->
-    <!-- <div id="tabpages">
-        <ul>
-            <li data-scripts="hivemind-option-general.js"><a href="hivemind-option-general.html"></a></li>
-            <li data-scripts="hivemind-option-filters.js"><a href="hivemind-option-filters.html"></a></li>
-            <li data-scripts="hivemind-option-support.js"><a href="hivemind-option-support.html"></a></li>
-        </ul>
-    </div> -->
-
     <footer>
-        <!-- <a id="privacy-policy" href="#" target="_blank"></a> -->
-        <!-- <a id="donate" href="#" target="_blank"></a> -->
         <div id="copyright">
             <p><span id="version"></span> &copy; Cody Rocker 2016</p>
         </div>

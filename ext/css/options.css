@@ -58,6 +58,10 @@ ul {
     position: relative;
 }
 
+#tabs {
+    border: none;
+}
+
 #alert {
     padding-top: 5px;
     height: 32px;
@@ -152,4 +156,20 @@ ul {
     margin: 0 auto;
     max-width: 1025px;
     padding: 0 10px;
+}
+
+.ui-tabs {
+    margin-left: 25px;
+}
+
+.ui-widget-header {
+    padding-top: 5px;
+    border: none;
+    background-color: #34373c;
+    color: #f2f2f2;
+}
+
+.ui-widget-content {
+    background-color: #141518;
+    color: #f2f2f2;
 }
