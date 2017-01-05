@@ -3,10 +3,10 @@ var backgroundPage = chrome.extension.getBackgroundPage();
 var storage = chrome.storage.local;
 
 // fetch references to DOM elements
-var toggleDetail = document.getElementById('toggle-detail');
-var toggleExample = document.getElementById('toggle-example');
-var detailText = document.getElementById('detail');
-var exampleText = document.getElementById('example');
+// var toggleDetail = document.getElementById('toggle-detail');
+// var toggleExample = document.getElementById('toggle-example');
+// var detailText = document.getElementById('detail');
+// var exampleText = document.getElementById('example');
 var alertMessage = document.getElementById('alert');
 var resetButton = document.querySelector('button.reset');
 var submitButton = document.querySelector('button.submit');
@@ -15,29 +15,45 @@ var textArea = document.getElementById('filters');
 // load any saved data
 loadFilters();
 
-var reminderText = $('#reminder');
+// var reminderText = $('#reminder');
 
-// add click event listeners
-toggleDetail.addEventListener('click', function() {
-    reminderText.slideUp(200);
-    $(detailText).slideDown(200, function() {
+// add event listeners
+$('#toggle-detail').click(showExtraInfo(this));
+$('#toggle-example').click(showExtraInfo(this));
+$('button.submit').click(saveFilters);
+$('button.reset').click(resetFilters);
+
+// toggleDetail.addEventListener('click', function() {
+//     reminderText.slideUp(200);
+//     $(detailText).slideDown(200, function() {
+//         setTimeout(function() {
+//             $(detailText).slideUp(200);
+//             reminderText.slideDown(200);
+//         }, 5000);
+//     });
+// });
+// toggleExample.addEventListener('click', function() {
+//     reminderText.slideUp(200);
+//     $(exampleText).slideDown(200, function() {
+//         setTimeout(function() {
+//             $(exampleText).slideUp(200);
+//             reminderText.slideDown(200);
+//         }, 5000);
+//     });
+// });
+
+// submitButton.addEventListener('click', saveFilters);
+// resetButton.addEventListener('click', resetFilters);
+
+function showExtraInfo(container) {
+    container.siblings.slideUp(200);
+    container.slideDown(200, function() {
         setTimeout(function() {
-            $(detailText).slideUp(200);
-            reminderText.slideDown(200);
+            container.slideUp(200);
+            $('#reminder').slideDown(200);
         }, 5000);
     });
-});
-toggleExample.addEventListener('click', function() {
-    reminderText.slideUp(200);
-    $(exampleText).slideDown(200, function() {
-        setTimeout(function() {
-            $(exampleText).slideUp(200);
-            reminderText.slideDown(200);
-        }, 5000);
-    });
-});
-submitButton.addEventListener('click', saveFilters);
-resetButton.addEventListener('click', resetFilters);
+}
 
 function saveFilters() {
     // TODO: validate and clean user input
