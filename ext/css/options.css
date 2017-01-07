@@ -162,8 +162,11 @@ ul {
     margin-left: 25px;
 }
 
+.ui-tabs-nav {
+    padding: .5em .5em 0!important;
+}
+
 .ui-widget-header {
-    padding-top: 5px;
     border: none;
     background-color: #34373c;
     color: #f2f2f2;
