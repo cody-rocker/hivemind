@@ -1,6 +1,6 @@
 // fetch references to background page and local storage
-var backgroundPage = chrome.extension.getBackgroundPage();
-var storage = chrome.storage.local;
+// var backgroundPage = chrome.extension.getBackgroundPage();
+// var storage = chrome.storage.local;
 
 // fetch references to DOM elements
 // var toggleDetail = document.getElementById('toggle-detail');
@@ -55,14 +55,15 @@ var storage = chrome.storage.local;
 //     });
 // }
 
+var storage = chrome.storage.local;
+
 function saveFilters() {
-    console.log('save button clicked.');
     // TODO: validate and clean user input
     // Get the current data from the form.
     var textAreaData = $('#filters').val();
     // Make sure it's not empty.
     if (!textAreaData) {
-        error('Error: No Filters Specified');
+        alert('Error :: No Filter(s) Specified!', true);
         return;
     }
     // Save the data using the Chrome Extension API
@@ -91,34 +92,42 @@ function resetFilters() {
     console.log('reset button clicked.');
     // Remove the saved value from storage
     storage.remove('filterKeywords', function(items) {
-        alert('Cleared saved fliter(s) from local storage');
+        alert('Cleared saved filter(s) from local storage');
     });
     // Reset the textArea
     $('#filters').val('');
 }
 
-function alert(msg) {
-    var alertMessage = $('#alert');
-    alertMessage.css('color', '#1BB76E');  // green text
-    alertMessage.text = msg;
+function alert(msg, error = false) {
+    var container = $('#alert');
+    container.css('color', error ? '#DB3535' : '#1BB76E');
+    container.text(msg);
     setTimeout(function() {
-        alertMessage.innerText = '';
+        container.text('');
     }, 3000);
 }
 
-function error(msg) {
-    var alertMessage = $('#alert');
-    alertMessage.css('color', '#DB3535');  // red text
-    alertMessage.text = msg;
-    setTimeout(function () {
-        alertMessage.innerText = '';
-    }, 3000);
-}
+// function alert(msg) {
+//     var alertMessage = $('#alert');
+//     alertMessage.css('color', '#1BB76E');  // green text
+//     alertMessage.text(msg);
+//     setTimeout(function() {
+//         alertMessage.text('');
+//     }, 3000);
+// }
+
+// function error(msg) {
+//     var alertMessage = $('#alert');
+//     alertMessage.css('color', '#DB3535');  // red text
+//     alertMessage.text(msg);
+//     setTimeout(function () {
+//         alertMessage.text('');
+//     }, 3000);
+// }
 
 $(document).ready(function () {
-
-    $('button.submit').click(saveFilters);
-    $('button.reset').click(resetFilters);
-
     loadFilters();
+
+    $('#submit').on('click', saveFilters);
+    $('#reset').on('click', resetFilters);
 });

@@ -1,15 +1,15 @@
 <!doctype html>
 <div>
-    <p id="helptext">Filter posts with titles containing the following list of keywords. Proper formatting is important. Values must be separated by a comma w/ no whitespace.</p>
-    <p id="extras">(<span id="toggle-example">see&nbspexample</span>)&nbsp(<span id="toggle-detail">more&nbspinfo</span>)</p>
-    <h2 id="label">Set keywords (or phrases) to filter here:</h2>
+    <div id="helptext">Filter posts with titles containing the following list of keywords. Proper formatting is important. Values must be separated by a comma w/ no whitespace.</div>
     <div id="custom-filters" class="container">
+        <h2 id="label" class="left">Set keywords (or phrases) to filter here:</h2>
+        <div class="right" id="extras">(<span id="toggle-example">see&nbspexample</span>)&nbsp(<span id="toggle-detail">more&nbspinfo</span>)</div>
         <textarea id="filters" cols="112" rows="15" placeholder="example: kittens,dickbutt,Javert,RIP ..."></textarea>
         <br>
         <div id="btn-group">
-            <button class="submit">Save</button>
-            <button class="reset" title="Clear filters from local stroage">Reset</button>
-            <span id="alert" class="right"></span>
+            <button id="submit">Save</button>
+            <button id="reset" title="Clear filters from local stroage">Reset</button>
+            <div id="alert" class="right"></div>
         </div>
     </div>
     <p id="reminder">Don't forget to save your changes!</p>

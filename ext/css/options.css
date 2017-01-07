@@ -22,14 +22,6 @@ footer {
     margin: 15px 0;
 }
 
-button.submit:hover {
-    color: #1BB76E!important;
-}
-
-button.reset:hover {
-    color: #DB3535!important;
-}
-
 a:hover {
     color: #1BB76E!important;
 }
@@ -38,6 +30,10 @@ ul {
     display: block;
     -webkit-margin-after: 0em;
     -webkit-margin-before: 0em;
+}
+
+#home {
+    cursor: pointer;
 }
 
 #main-nav li {
@@ -62,23 +58,49 @@ ul {
     border: none;
 }
 
-#alert {
-    padding-top: 5px;
-    height: 32px;
-    width: 300px;
-    margin-right: 45px;
-    text-align: right;
+#helptext {
+    margin-top: 10px;
+    width: 85%;
+    font-size: 1.5em;
 }
 
-#helptext {
+#reminder, #example, #detail {
     width: 80%;
-    font-size: 1.5em;
-    padding: 40px 0px 0px 25px;
+    font-size: 1.25em;
+    font-style: italic;
+}
+
+/* container for label, textinput, buttons, alert */
+#custom-filters {width: 85%;}
+
+#label {
+    margin-top: 15px;
+    display: inline;
 }
 
 #extras {
-    width: 80%;
-    padding: 0px 0px 0px 25px;
+    margin-right: 10px;
+    padding-top: 20px;
+    text-align: right;
+    width: 30%;
+}
+
+#filters {font-size: 1.2em;}
+
+#btn-group {
+    margin-top: 5px;
+    padding-left: 10px;
+}
+
+#submit:hover {color: #1BB76E!important;}
+#reset:hover {color: #DB3535!important;}
+
+#alert {
+    margin-right: 10px;
+    padding-top: 5px;
+    text-align: right;
+    height: 32px;
+    width: 30%;
 }
 
 #example {
@@ -97,30 +119,6 @@ ul {
 #toggle-detail {
     cursor: pointer;
     border-bottom: 1px dotted #1BB76E;
-}
-
-#reminder, #example, #detail {
-    width: 80%;
-    font-size: 1.25em;
-    font-style: italic;
-    padding: 5px 0px 0px 25px;
-}
-
-#label {
-    padding: 10px 0px 0px 25px;
-}
-
-#custom-filters {
-    width: 85%;
-}
-
-#filters {
-    margin: 5px 25px;
-}
-
-#btn-group {
-    margin-left: 25px;
-    padding-left: 10px;
 }
 
 #copyright {

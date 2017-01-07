@@ -1,6 +1,6 @@
-// fetch references to background page and local storage
+// fetch references to background page
 var backgroundPage = chrome.extension.getBackgroundPage();
-var storage = chrome.storage.local;
+// var storage = chrome.storage.local;
 
 function populateTabs() {
     $.get('option-general.html', function(data) {
@@ -35,7 +35,17 @@ function SocialLink(xmlElement) {
     return this.li;
 }
 
+function linkToHome() {
+    var icon = document.createElement('img');
+    icon.src = 'icons/logo.png';
+    // TODO: Fetch this url dynamically
+    $('#home').click(function() {
+        chrome.tabs.create({'url': 'https://cody-rocker.github.io/hivemind'});
+    }).append(icon);
+}
+
 function displaySocialLinks() {
+    // TODO: Make this an xhr request to my server
     var parser = new DOMParser();
     $.get('social-metadata.xml', function(data) {
         var xmlDoc = parser.parseFromString(data, 'text/xml');
@@ -44,7 +54,6 @@ function displaySocialLinks() {
             $('#social-links').append(new SocialLink(socialLinks[i]));
         }
     });
-
 }
 
 function displayVersionNumber() {
@@ -61,11 +70,12 @@ function displayVersionNumber() {
     } catch(ex) {}  // silently fail
 }
 
-$('#tabs').tabs();
-
+populateTabs();
 $(document).ready(function () {
-    // misc. page setup
-    populateTabs();
+    // Activate JQueryUI element(s)
+    $('#tabs').tabs();
+
+    linkToHome();
     displaySocialLinks();
     displayVersionNumber();
 });
