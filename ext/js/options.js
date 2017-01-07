@@ -12,6 +12,15 @@ function populateTabs() {
         GalleryOptions.initialize();
         GalleryOptions.addEventListeners();
     });
+    $.get('option-album.html', function(data) {
+        $('#options-album').append(data);
+    });
+    $.get('option-advanced.html', function(data) {
+        $('#options-advanced').append(data);
+    });
+    $.get('option-support.html', function(data) {
+        $('#options-support').append(data);
+    });
 }
 
 function SocialLink(xmlElement) {
