@@ -8,6 +8,8 @@ function populateTabs() {
     });
     $.get('option-filters.html', function(data) {
         $('#options-filters').append(data);
+        FilterOptions.initialize();
+        FilterOptions.addEventListeners();
     });
 }
 
@@ -70,11 +72,12 @@ function displayVersionNumber() {
     } catch(ex) {}  // silently fail
 }
 
-populateTabs();
 $(document).ready(function () {
     // Activate JQueryUI element(s)
-    $('#tabs').tabs();
-
+    $('#tabs').tabs().addClass('ui-tabs-vertical ui-helper-clearfix');
+    $("#tabs li").removeClass('ui-corner-top').addClass('ui-corner-left');
+    $('ul.ui-tabs-nav').addClass('shadow');
+    populateTabs();
     linkToHome();
     displaySocialLinks();
     displayVersionNumber();

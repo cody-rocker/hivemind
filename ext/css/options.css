@@ -26,6 +26,10 @@ a:hover {
     color: #1BB76E!important;
 }
 
+a:focus {
+    outline: 0!important;
+}
+
 ul {
     display: block;
     -webkit-margin-after: 0em;
@@ -55,6 +59,7 @@ ul {
 }
 
 #tabs {
+    left: 0;
     border: none;
 }
 
@@ -156,12 +161,53 @@ ul {
     padding: 0 10px;
 }
 
-.ui-tabs {
-    margin-left: 25px;
+.ui-tabs-vertical .ui-tabs-nav {
+    padding: 1em 1em 1em 1.5em;
+    float: left;
+    width: 12em;
+    height: 25em;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
 }
 
-.ui-tabs-nav {
-    padding: .5em .5em 0!important;
+.ui-tabs-vertical .ui-tabs-nav li a { display: block; }
+.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-selected {
+    padding-right: .1em;
+}
+
+.ui-tabs-vertical .ui-tabs-panel {
+    padding: .8em;
+    width: 40em;
+}
+
+.ui-tabs-active {
+    border: 0px;
+}
+
+.ui-state-default {
+    background-color: #50545c!important;
+    border: 0!important;
+}
+
+.ui-state-active {
+    background-color: #50545c!important;
+    border: 0!important;
+    -moz-box-shadow:    0px 0px 11px 1px #1BB76E;
+    -webkit-box-shadow: 0px 0px 11px 1px #1BB76E;
+    box-shadow:         0px 0px 11px 1px #1BB76E;
+}
+
+.ui-tabs-tab {
+    width: 90%;
+    border-radius: 20px;
+    margin-top: 1em!important;
+    font-size: 1.35em;
+}
+
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+    width: 80%;
+    font-weight: bold;
 }
 
 .ui-widget-header {

@@ -1,7 +1,3 @@
-// fetch references to background page and local storage
-// var backgroundPage = chrome.extension.getBackgroundPage();
-// var storage = chrome.storage.local;
-
 // fetch references to DOM elements
 // var toggleDetail = document.getElementById('toggle-detail');
 // var toggleExample = document.getElementById('toggle-example');
@@ -57,6 +53,17 @@
 
 var storage = chrome.storage.local;
 
+// Store tab operations in a Global scope variable
+var FilterOptions = {
+    initialize: function() {
+        loadFilters()
+    },
+    addEventListeners: function() {
+        $('#submit').on('click', saveFilters);
+        $('#reset').on('click', resetFilters);
+    }
+}
+
 function saveFilters() {
     // TODO: validate and clean user input
     // Get the current data from the form.
@@ -107,27 +114,6 @@ function alert(msg, error = false) {
     }, 3000);
 }
 
-// function alert(msg) {
-//     var alertMessage = $('#alert');
-//     alertMessage.css('color', '#1BB76E');  // green text
-//     alertMessage.text(msg);
-//     setTimeout(function() {
-//         alertMessage.text('');
-//     }, 3000);
-// }
-
-// function error(msg) {
-//     var alertMessage = $('#alert');
-//     alertMessage.css('color', '#DB3535');  // red text
-//     alertMessage.text(msg);
-//     setTimeout(function () {
-//         alertMessage.text('');
-//     }, 3000);
-// }
-
-$(document).ready(function () {
-    loadFilters();
-
-    $('#submit').on('click', saveFilters);
-    $('#reset').on('click', resetFilters);
-});
+// $(document).ready(function () {
+//     loadFilters();
+// });
