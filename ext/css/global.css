@@ -5,9 +5,7 @@ body {
     background-color: #141518;
 }
 
-a {
-    cursor: pointer;
-}
+a { cursor: pointer; }
 
 button {
     cursor: pointer;
@@ -36,14 +34,7 @@ textarea {
     color: #141518;
 }
 
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    font-size: 1.2em;
-    color: #f2f2f2;
-}
-
-.container {
-    position: relative;
-}
+.container { position: relative; }
 
 .shadow {
     -moz-box-shadow:    0px 0px 11px 1px #111;
@@ -59,13 +50,8 @@ textarea {
     1px 1px 0 #111;
 }
 
-.left {
-    float: left;
-}
-
-.right {
-    float: right;
-}
+.left { float: left; }
+.right { float: right; }
 
 .construction {
     width: 300px;
