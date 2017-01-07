@@ -6,10 +6,11 @@ function populateTabs() {
     $.get('option-general.html', function(data) {
         $('#options-general').append(data);
     });
-    $.get('option-filters.html', function(data) {
-        $('#options-filters').append(data);
-        FilterOptions.initialize();
-        FilterOptions.addEventListeners();
+    $.get('option-gallery.html', function(data) {
+        $('#options-gallery').append(data);
+        // global option-gallery.js calls
+        GalleryOptions.initialize();
+        GalleryOptions.addEventListeners();
     });
 }
 
