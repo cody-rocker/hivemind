@@ -29,7 +29,7 @@ function showExtraInfo() {
             break
 
         default:
-            break
+            break  // fail silently
     }
     reminder.siblings().hide();
     reminder.slideUp(100);
@@ -79,6 +79,10 @@ function resetFilters() {
     storage.remove('filterKeywords', function(items) {
         alert('Cleared saved filter(s) from local storage');
     });
+    storage.remove('filterArray', function(items) {
+        // successful operation callback
+        return;
+    })
     // Reset the textArea
     $('#filters').val('');
 }

@@ -1,4 +1,3 @@
-// TODO: Add "You haven't defined any filters" message when filter array is empty.
 // TODO: Refactor this script with jQuery
 var storage = chrome.storage.local;
 // Default popupSettings
@@ -8,17 +7,21 @@ var showImages = false;
 // Register all listeners on the page here
 function addListeners() {
     // TODO: Add icon/link to clear hiddenPosts from dropdown.
+    $('#clear') // add listener for clear button
+        .on('click', function() {
+            clearAllClicked();
+        });
     $('#options')  // add click listener for options icon
         .on('click', function() {
             chrome.tabs.create({'url': chrome.extension.getURL("options.html")});
-    });
+        });
     $('#blocked-posts')  // register listeners for hiddenPost objects
         .on('click', '.post', function() {
             $(this).children('img').slideDown();
         })
         .on('click', 'img', function() {
-            var $this = $(this);
-            openHiddenPost(this);
+            var url = $(this).siblings('span').text();
+            openHiddenPost(url);
 
         })
         .on('mouseleave', '.post', function() {
@@ -38,6 +41,26 @@ function getHiddenPostsFromBg(callback) {
                 console.log.error(response);
                 throw Error('Bad response from background.js');
             }
+    });
+}
+
+// Clear the current blockList from background page
+function clearHiddenPostsFromBg(callback) {
+    chrome.runtime.sendMessage({
+        action: "clearHiddenPosts"
+    }, function(response) {
+        if (response.hiddenPosts.length === 0) {
+            callback();
+        } else {
+            console.log.error(response);
+            throw Error('Bad response from background.js');
+        }
+    });
+}
+
+function clearAllClicked() {
+    clearHiddenPostsFromBg(function() {
+        $('.post').remove();
     });
 }
 
@@ -92,24 +115,55 @@ function showHidden(blocklist) {
     }
 }
 
-function openHiddenPost(image) {
+function openHiddenPost(url) {
     if (newTab) {
-        chrome.tabs.create({'url': image.siblings('span').text()});
+        chrome.tabs.create({'url': url});
     } else {
         chrome.tabs.query({
             active: true, currentWindow: true
         }, function(tabs) {
             var tab = tabs[0];
-            chrome.tabs.update(tab.id, {'url': image.siblings('span').text()});
+            chrome.tabs.update(tab.id, {'url': url});
         });
     }
+}
+
+function displayNoFilterWarning() {
+    var container = $('#no-filter-warning');
+    container.on('click', function() {
+        var targetUrl = chrome.extension.getURL("options.html") + '#options-gallery';
+        chrome.tabs.create({'url': targetUrl});
+    });
+    container.show();
+}
+
+function displayVersionNumber() {
+    try {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', chrome.extension.getURL('manifest.json'), true);
+        xhr.onreadystatechange = function() {
+            if (this.readyState === 4) {
+                var theManifest = JSON.parse(this.responseText);
+                $('#version').text("HiveMind v" + theManifest.version);
+            }
+        };
+        xhr.send();
+    } catch(ex) {}  // silently fail
 }
 
 // Triggered when browserAction icon is clicked
 document.addEventListener('DOMContentLoaded', function() {
     getPopupSettings();
-    getHiddenPostsFromBg(function(blocklist) {
-        showHidden(blocklist);
+    // Check that the user has defined some filters
+    storage.get('filterArray', function(items) {
+        if (items.filterArray) {
+            getHiddenPostsFromBg(function(blocklist) {
+                showHidden(blocklist);
+            });
+        } else {
+            displayNoFilterWarning();
+        }
     });
     addListeners();
+    displayVersionNumber();
 });

@@ -1,3 +1,6 @@
+// NOTE: this script started as an adaption of a simple js snippet I wrote in
+//       the chrome dev console one day. It needs a lot of work to improve
+//       robustness, reliability and forward compatibility.
 var storage = chrome.storage.local;
 var hiddenPosts = [];
 var activeFilters = [];
@@ -75,7 +78,7 @@ function filterGallery(filterArray) {
 // NOTE: This goes against my better judgement in DontRepeatYourself practice,
 //       because the function structure is so similar but the DOM references
 //       and async function timing are completely different (and broken),
-//       for now, i'll keep the functionality complete separate and port in any
+//       for now, i'll keep the functionality completely separate and port in any
 //       abstraction/refactoring in parallel. :(
 
 // filter a post detail DOM

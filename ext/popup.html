@@ -16,13 +16,22 @@
 <body>
     <div id="toolbar" class="shadow">
         <img id="logo" src="icons/logo-small.png" class="left">
-        <div id="options" class="right" title="Options">
+        <div id="options" class="right icon" title="Options">
             <span class="icon-cog"></span>
+        </div>
+        <div id="clear" class="right icon" title="Clear All">
+            <span class="icon-fire"></span>
         </div>
     </div>
     <div class="container">
         <div id="blocked-posts"></div>
+        <div id="no-filter-warning" class="hide shadow">
+            <center>
+            <h3>You haven't defined any filters yet. Click Here to set some up right now.</h3>
+            </center>
+        </div>
     </div>
-    <div id="status"></div>
+    <div id="status" class="left"></div>
+    <div id="version" class="right"></div>
 </body>
 </html>

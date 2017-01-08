@@ -11,6 +11,16 @@ p {
     margin: 0 5px 5px 5px;
 }
 
+.icon {
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    width: 16px;
+    height: 16px;
+    margin: 2px 15px 5px 0px;
+    padding-right: 5px;
+}
+
 .post {
     cursor: pointer;
     padding: 10px 5px;
@@ -57,24 +67,37 @@ p {
 
 #status {
     padding: 5px;
-    display: inline;
+    /*display: inline;*/
     font-size:.8em;
 }
 
-#options {
-    font-weight: bold;
-    cursor: pointer;
-    text-align: center;
-    width: 16px;
-    height: 16px;
-    margin: 2px 15px 5px 0px;
-    padding-right: 5px;
+#version {
+    padding: 5px;
+    /*display: inline;*/
+    font-size:.8em;
 }
 
 #options:hover {
     color: #1bb76e;
 }
 
+#clear:hover {
+    color: #DB3535;
+}
+
 #blocked-posts {
     margin-top: 35px;
+}
+
+#no-filter-warning {
+    cursor: pointer;
+    padding: .8em;
+    border-radius: 5px;
+    border: 1px solid #DB3535;
+    background-color: #2C2F34;
+    margin: 5px 5px;
+}
+
+#no-filter-warning h3 {
+    font-size: 1em;
 }

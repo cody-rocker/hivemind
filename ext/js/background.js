@@ -14,10 +14,15 @@ chrome.runtime.onMessage.addListener(
                 sendResponse({ hiddenPosts: hiddenPosts });
                 break;
 
+            case "clearHiddenPosts":
+                hiddenPosts = [];
+                sendResponse({ hiddenPosts: hiddenPosts });
+                break
+
             case "contentResult":
                 if (request.hiddenPosts.length === 0) {
-                    chrome.browserAction.setBadgeText({ text: "" });
                     hiddenPosts = [];
+                    chrome.browserAction.setBadgeText({ text: "" });
                 } else {
                     chrome.browserAction.setBadgeText({
                         text: request.hiddenPosts.length.toString()
