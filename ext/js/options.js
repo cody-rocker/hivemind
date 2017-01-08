@@ -1,6 +1,3 @@
-// fetch references to background page
-var backgroundPage = chrome.extension.getBackgroundPage();
-// var storage = chrome.storage.local;
 
 function populateTabs() {
     $.get('option-general.html', function(data) {

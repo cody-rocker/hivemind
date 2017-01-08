@@ -1,3 +1,4 @@
+var storage = chrome.storage.local;
 var hiddenPosts = [];
 
 chrome.browserAction.setTitle({ title: "HiveMind" });
@@ -8,6 +9,21 @@ chrome.browserAction.setBadgeBackgroundColor({ color: [85, 85, 85, 155] });
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         switch (request.action) {
+
+            // case "getPopupSettings":
+            //     var tabSetting, imageSetting;
+            //     storage.get('newTab', function(items) {
+            //         tabSetting = items.newTab;
+            //     });
+            //     storage.get('showImage', function(item) {
+            //         imageSetting = items.showImage;
+            //     });
+            //     var popupSettings = {
+            //         newTab: tabSetting,
+            //         showImage: imageSetting
+            //     }
+            //     sendResponse({ popupSettings: popupSettings });
+            //     break;
 
             case "getHiddenPosts":
                 sendResponse({ hiddenPosts: hiddenPosts });

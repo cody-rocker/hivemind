@@ -31,7 +31,7 @@ function updateTabSettings() {
         'newTab': checkbox.is(':checked')
     }, function() {
         // successful save callback
-        console.log('updateTabSettings completed successfully;');
+        // console.log('updateTabSettings completed successfully;');
         return;
     });
 }
@@ -42,7 +42,7 @@ function updateImageSettings() {
         'showImages': checkbox.is(':checked')
     }, function() {
         // successful save callback
-        console.log('updateImages completed successfully;');
+        // console.log('updateImages completed successfully;');
         return;
     });
 }
