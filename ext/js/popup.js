@@ -17,20 +17,9 @@ function addListeners() {
             $(this).children('img').slideDown();
         })
         .on('click', 'img', function() {
-            // TODO: move this to viewHiddenPost function
             var $this = $(this);
-            if (newTab) {
-                chrome.tabs.create({'url': $this.siblings('span').text()});
-            } else {
-                chrome.tabs.query({
-                    active: true, currentWindow: true
-                }, function(tabs) {
-                    var tab = tabs[0];
-                    chrome.tabs.update(tab.id, {
-                        'url': $this.siblings('span').text()
-                    });
-                });
-            }
+            openHiddenPost(this);
+
         })
         .on('mouseleave', '.post', function() {
             $(this).children('img').delay(1000).slideUp();
@@ -100,6 +89,19 @@ function showHidden(blocklist) {
     var blockedPosts = document.getElementById('blocked-posts');
     for ( i in blocklist ) {
         blockedPosts.appendChild(new HiddenPost(blocklist[i]));
+    }
+}
+
+function openHiddenPost(image) {
+    if (newTab) {
+        chrome.tabs.create({'url': image.siblings('span').text()});
+    } else {
+        chrome.tabs.query({
+            active: true, currentWindow: true
+        }, function(tabs) {
+            var tab = tabs[0];
+            chrome.tabs.update(tab.id, {'url': image.siblings('span').text()});
+        });
     }
 }
 

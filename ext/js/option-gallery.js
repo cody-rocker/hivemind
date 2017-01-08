@@ -1,11 +1,11 @@
 var storage = chrome.storage.local;
+
 // Store tab operations in a Global scope variable
 // This is effectively the public interface for the gallery tab functionality.
 var GalleryOptions = {
     initialize: function() {
         loadFilters();
     },
-    // TODO: add example/info listeners and animations
     addEventListeners: function() {
         $('#submit').on('click', saveFilters);
         $('#reset').on('click', resetFilters);
