@@ -33,22 +33,6 @@ input[type="checkbox" i] {
     height: 1.5em;
 }
 
-/*input[type="image"] {
-    max-height: 10em;
-    border: 1px solid #1BB76E;
-    -webkit-border-radius: 60px;
-    border-radius: 60px;
-    margin: 1em 0 0 0;
-    padding: 1em 2em 0 2em;
-}*/
-
-/*input[type="image"]:hover {
-    border: 1px solid #f2f2f2!important;
-    -moz-box-shadow:    0px 0px 11px 1px #1BB76E;
-    -webkit-box-shadow: 0px 0px 11px 1px #1BB76E;
-    box-shadow:         0px 0px 11px 1px #1BB76E;
-}*/
-
 label {
     height: 1.5em;
     font-size: 1.2em;
@@ -90,7 +74,6 @@ a:focus { outline: 0!important; }
     margin-right: 15em;
     padding-top: 20px;
     text-align: right;
-    /*width: 30%;*/
 }
 
 #filters { font-size: 1.2em; }
@@ -119,15 +102,8 @@ a:focus { outline: 0!important; }
 #toggle-example { cursor: pointer; border-bottom: 1px dotted #1BB76E; }
 #detail { display: none; }
 #toggle-detail { cursor: pointer; border-bottom: 1px dotted #1BB76E; }
-
-#contactme {
-    cursor: pointer;
-    margin-top: 1.5em;
-}
-
-#donate {
-    margin-top: 1.5em;
-}
+#contactme { cursor: pointer; margin-top: 1.5em; }
+#donate { margin-top: 1.5em; }
 
 #copyright {
     font-size: .8em;

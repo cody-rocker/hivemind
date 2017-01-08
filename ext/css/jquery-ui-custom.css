@@ -1,11 +1,9 @@
 .ui-tabs-vertical .ui-tabs-nav {
     position: fixed;
     top: 100px;
-    /*margin-top: 2em;*/
     padding: 1em;
     float: left;
     width: 10em;
-    /*height: 25em;*/
     border-bottom-right-radius: 25px;
     border-top-right-radius: 25px;
     border-bottom-left-radius: 0;
