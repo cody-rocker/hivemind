@@ -5,6 +5,9 @@ var backgroundPage = chrome.extension.getBackgroundPage();
 function populateTabs() {
     $.get('option-general.html', function(data) {
         $('#options-general').append(data);
+        // global option-general.js calls
+        GeneralOptions.initialize();
+        GeneralOptions.addEventListeners();
     });
     $.get('option-gallery.html', function(data) {
         $('#options-gallery').append(data);
@@ -83,10 +86,11 @@ function displayVersionNumber() {
 }
 
 $(document).ready(function () {
-    // Activate JQueryUI element(s)
+    // Activate and configure JQueryUI element(s)
     $('#tabs').tabs().addClass('ui-tabs-vertical ui-helper-clearfix');
     $("#tabs li").removeClass('ui-corner-top').addClass('ui-corner-left');
     $('ul.ui-tabs-nav').addClass('shadow');
+
     // Setup options page
     populateTabs();
     linkToHome();

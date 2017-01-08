@@ -3,7 +3,7 @@ var storage = chrome.storage.local;
 // This is effectively the public interface for the gallery tab functionality.
 var GalleryOptions = {
     initialize: function() {
-        loadFilters()
+        loadFilters();
     },
     // TODO: add example/info listeners and animations
     addEventListeners: function() {
