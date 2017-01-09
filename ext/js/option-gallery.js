@@ -17,7 +17,6 @@ var GalleryOptions = {
 function showExtraInfo() {
     var extraInfo;
     var reminder = $('#reminder');
-
     switch (this.id) {
 
         case 'toggle-detail':

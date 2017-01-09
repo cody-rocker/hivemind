@@ -52,7 +52,6 @@ function clearHiddenPostsFromBg() {
         action: "clearHiddenPostsFromBg"
     }, function(response) {
         if (response.hiddenPosts.length === 0) {
-            // console.log('background.js hiddenPosts cleared.');
             // NOTE: Successful operation callback
         } else {
             console.log.error(response);
@@ -69,7 +68,6 @@ function clearHiddenPostsFromCs() {
             action: "clearHiddenPostsFromCs"
         }, function(response) {
             if (response.hiddenPosts.length === 0) {
-                // console.log('gallery-content-script.js hiddenPosts cleared.');
                 // NOTE: Successful operation callback
             } else {
                 console.log.error(reponse);
