@@ -134,9 +134,12 @@ function displayStatus(blocklist) {
 
 // Add hidden posts to popup page
 function showHidden(blocklist) {
+    var clearAllIcon = $('#clear')
     displayStatus(blocklist);
     if (blocklist.length > 0) {
-        $('#clear').show();
+        clearAllIcon.show();
+    } else {
+        clearAllIcon.hide();
     }
     // Add new divs to DOM
     var blockedPosts = document.getElementById('blocked-posts');
