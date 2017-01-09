@@ -6,7 +6,6 @@ var showImages = false;
 
 // Register all listeners on the page here
 function addListeners() {
-    // TODO: Add icon/link to clear hiddenPosts from dropdown.
     $('#clear') // add listener for clear button
         .on('click', function() {
             clearAllClicked();
@@ -45,23 +44,45 @@ function getHiddenPostsFromBg(callback) {
 }
 
 // Clear the current blockList from background page
-function clearHiddenPostsFromBg(callback) {
+function clearHiddenPostsFromBg() {
     chrome.runtime.sendMessage({
-        action: "clearHiddenPosts"
+        action: "clearHiddenPostsFromBg"
     }, function(response) {
         if (response.hiddenPosts.length === 0) {
-            callback();
+            // console.log('background.js hiddenPosts cleared.');
+            // NOTE: Successful operation callback
         } else {
             console.log.error(response);
             throw Error('Bad response from background.js');
         }
     });
+    return true;
 }
 
-function clearAllClicked() {
-    clearHiddenPostsFromBg(function() {
-        $('.post').remove();
+// Clear the current blocklist from background page
+function clearHiddenPostsFromCs() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+            action: "clearHiddenPostsFromCs"
+        }, function(response) {
+            if (response.hiddenPosts.length === 0) {
+                // console.log('gallery-content-script.js hiddenPosts cleared.');
+                // NOTE: Successful operation callback
+            } else {
+                console.log.error(reponse);
+                throw Error('Bad response from gallery-content-script.js');
+            }
+        });
     });
+    return true;
+}
+
+// Clear all references to the current blockList and remove DOM elements
+function clearAllClicked() {
+    if ( clearHiddenPostsFromBg() && clearHiddenPostsFromCs() ) {
+        $('.post').remove();
+        displayStatus([]);
+    }
 }
 
 // Fetch the current popup settings from background page
@@ -103,11 +124,13 @@ function HiddenPost(obj) {
     return this.container;
 }
 
+function displayStatus(blocklist) {
+    $('#status').text(blocklist.length.toString() + " hidden item(s)");
+}
+
 // Add hidden posts to popup page
 function showHidden(blocklist) {
-    // Update status text
-    document.getElementById('status')
-        .textContent = blocklist.length.toString() + " hidden item(s)";
+    displayStatus(blocklist);
     // Add new divs to DOM
     var blockedPosts = document.getElementById('blocked-posts');
     for ( i in blocklist ) {

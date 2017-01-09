@@ -11,15 +11,19 @@ chrome.runtime.onMessage.addListener(
         switch (request.action) {
 
             case "getHiddenPosts":
+                // console.log('getHiddenPosts called');
                 sendResponse({ hiddenPosts: hiddenPosts });
                 break;
 
-            case "clearHiddenPosts":
+            case "clearHiddenPostsFromBg":
+                // console.log('clearHiddenPosts called');
                 hiddenPosts = [];
-                sendResponse({ hiddenPosts: hiddenPosts });
+                chrome.browserAction.setBadgeText({ text: "" });
+                sendResponse({hiddenPosts: hiddenPosts});
                 break
 
             case "contentResult":
+                // console.log('contentResult called');
                 if (request.hiddenPosts.length === 0) {
                     hiddenPosts = [];
                     chrome.browserAction.setBadgeText({ text: "" });
@@ -32,7 +36,8 @@ chrome.runtime.onMessage.addListener(
                 break;
 
             default:
-                console.error('request.action = ' + request.action);
-                throw Error('background.js :: missing/unimplemented action param.');
+                // console.error('request.action = ' + request.action);
+                // throw Error('background.js :: missing/unimplemented action param.');
+                break;
         }
     });

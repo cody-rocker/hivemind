@@ -2,8 +2,9 @@
 //       the chrome dev console one day. It needs a lot of work to improve
 //       robustness, reliability and forward compatibility.
 var storage = chrome.storage.local;
-var hiddenPosts = [];
 var activeFilters = [];
+var hiddenPosts = [];
+
 
 // load filters from storage (maybe background page in the future?)
 function loadFilterArray() {
@@ -58,9 +59,11 @@ function filterGallery(filterArray) {
         // does this title match any of the filter keywords?
         if (matchTitle(filterArray, postTitle)) {
             // Make sure this item wasn't already hidden in a previous scan
-            if ($this.style.display !== "none") {
+            if ($this.style.display !== "none" && $this.className !== "hivemind") {
                 // Hide the matched post div
                 $this.style.display = "none";
+                $($this).addClass('hivemind');
+
                 // NOTE: object schema is used to create the div objects in popup.
                 // Add matched post to the hiddenPosts array
                 hiddenPosts.push({
@@ -155,6 +158,24 @@ function addDOMUpdateListener() {
 function removeDOMUpdateListener() {
     $(this).unbind('DOMSubtreeModified', DOMModificationHandler);
 }
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        switch (request.action) {
+
+            case "clearHiddenPostsFromCs":
+                // console.log('clearHiddenPostsFromContentScript called');
+                hiddenPosts = [];
+                sendResponse({hiddenPosts: hiddenPosts});
+                break;
+
+            default:
+                // console.error('request.action = ' + request.action);
+                // throw Error('gallery-content-script.js :: missing/unimplemented action param.');
+                break;
+        }
+    }
+);
 
 // TODO: I can probably handle fetching the active filters from storage
 //       and other module communication while the DOM is loading and Imgur
