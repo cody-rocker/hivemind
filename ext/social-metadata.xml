@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Social>
+    <Link Name="LinkedIn" Url="https://www.linkedin.com/in/cody-rocker-7021a5103" Icon="icon-linkedin" />
     <Link Name="Github" Url="https://github.com/cody-rocker" Icon="icon-github" />
     <Link Name="Twitter" Url="https://twitter.com/cody_rocker" Icon="icon-twitter" />
     <Link Name="Google+" Url="https://plus.google.com/116380484898555498106" Icon="icon-google-plus" />
-    <Link Name="LinkedIn" Url="https://www.linkedin.com/in/cody-rocker-7021a5103" Icon="icon-linkedin" />
 </Social>

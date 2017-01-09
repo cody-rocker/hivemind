@@ -8,7 +8,10 @@ var showImages = false;
 function addListeners() {
     $('#clear') // add listener for clear button
         .on('click', function() {
-            clearAllClicked();
+            $this = $(this);
+            clearAllClicked(function() {
+                $this.hide();
+            });
         });
     $('#options')  // add click listener for options icon
         .on('click', function() {
@@ -78,10 +81,11 @@ function clearHiddenPostsFromCs() {
 }
 
 // Clear all references to the current blockList and remove DOM elements
-function clearAllClicked() {
+function clearAllClicked(callback) {
     if ( clearHiddenPostsFromBg() && clearHiddenPostsFromCs() ) {
         $('.post').remove();
         displayStatus([]);
+        callback();
     }
 }
 
@@ -131,6 +135,9 @@ function displayStatus(blocklist) {
 // Add hidden posts to popup page
 function showHidden(blocklist) {
     displayStatus(blocklist);
+    if (blocklist.length > 0) {
+        $('#clear').show();
+    }
     // Add new divs to DOM
     var blockedPosts = document.getElementById('blocked-posts');
     for ( i in blocklist ) {
