@@ -1,4 +1,3 @@
-// TODO: Refactor this script with jQuery
 var storage = chrome.storage.local;
 // Default popupSettings
 var newTab = false;
@@ -183,7 +182,7 @@ function displayVersionNumber() {
 }
 
 // Triggered when browserAction icon is clicked
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {
     getPopupSettings();
     // Check that the user has defined some filters
     storage.get('filterArray', function(items) {
