@@ -1,4 +1,6 @@
 var storage = chrome.storage.local;
+// TODO: new opt :: filter posts with title length less than
+// TODO: new filter :: strict matching on whole words/tokens
 
 // Store tab operations in a Global scope variable
 // This is effectively the public interface for the gallery tab functionality.
