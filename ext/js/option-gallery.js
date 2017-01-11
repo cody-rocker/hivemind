@@ -6,6 +6,7 @@ var storage = chrome.storage.local;
 // This is effectively the public interface for the gallery tab functionality.
 var GalleryOptions = {
     initialize: function() {
+        loadGallerySettings();
         loadFilters();
     },
     addEventListeners: function() {
@@ -86,6 +87,14 @@ function resetFilters() {
     })
     // Reset the textArea
     $('#filters').val('');
+}
+
+function loadGallerySettings() {
+    // NOTE: right now this just populates the option dropdown.
+    var container = $('#minimun-length');
+    for (var i = 1; i <= 10; i++) {
+        container.append('<option value='+i+'>'+i+'</option>');
+    }
 }
 
 function alert(msg, error = false) {
