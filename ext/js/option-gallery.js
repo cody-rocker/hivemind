@@ -10,6 +10,7 @@ var GalleryOptions = {
         loadFilters();
     },
     addEventListeners: function() {
+        $('#minimun-length').on('change', updateMinLength);
         $('#submit').on('click', saveFilters);
         $('#reset').on('click', resetFilters);
         $('#toggle-detail').on('click', showExtraInfo);
@@ -92,9 +93,27 @@ function resetFilters() {
 function loadGallerySettings() {
     // NOTE: right now this just populates the option dropdown.
     var container = $('#minimun-length');
+    console.log(container);
     for (var i = 1; i <= 10; i++) {
+        console.log(i);
         container.append('<option value='+i+'>'+i+'</option>');
     }
+    // Load saved options state
+    storage.get('minLength', function(items) {
+        if (items.minLength) {
+            $('#minimun-length option[value='+items.minLength+']')
+                .prop('selected',true);
+        }
+    });
+}
+
+function updateMinLength() {
+    storage.set({
+        'minLength': $(this).val()
+    }, function() {
+        // successful save callback
+        return;
+    });
 }
 
 function alert(msg, error = false) {
