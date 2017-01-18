@@ -1,5 +1,4 @@
 var storage = chrome.storage.local;
-// TODO: new opt :: filter posts with title length less than
 // TODO: new filter :: strict matching on whole words/tokens
 
 // Store tab operations in a Global scope variable
@@ -91,10 +90,9 @@ function resetFilters() {
 }
 
 function loadGallerySettings() {
-    // NOTE: right now this just populates the option dropdown.
     var container = $('#minimun-length');
     console.log(container);
-    for (var i = 1; i <= 10; i++) {
+    for (var i = 2; i <= 10; i++) {
         console.log(i);
         container.append('<option value='+i+'>'+i+'</option>');
     }
