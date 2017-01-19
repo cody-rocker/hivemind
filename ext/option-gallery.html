@@ -1,17 +1,28 @@
 <!doctype html>
 <div>
     <h1>Gallery Filters</h1>
+    <hr>
     <p>
         <input type="checkbox" class="feature" id="filter-by-length" />
         <label for="filter-by-length">Filter posts with titles less than&emsp;<select id="minimun-length"></select>&emsp;characters.</label>
     </p>
+    <hr>
     <p>
         <input type="checkbox" class="feature" id="filter-by-contains" />
         <label for="filter-by-contains">Filter posts with titles containing the following list of terms.</label>
     </p>
+    <div id="contains-term-list" class="container"></div>
+    <div id="new-term-contains">
+        <h4 id="label" class="left">&ensp;Add new keywords (or phrases) to filter list:</h4>
+        <input type="text" id="add-term-contains" size="64" placeholder="example: kittens,dickbutt,Javert,RIP ...">
+        <button id="submit-contains">Save</button>
+        <button id="reset-contains" title="Remove all">Reset</button>
+    </div>
+    <hr>
     <!-- TODO: finish refactoring this with new functionality. -->
-    <div class="helptext">Proper formatting is important. Values must be separated by a comma w/ no whitespace.</div>
-    <div id="custom-filters" class="container">
+    <!-- TODO: restore all this functionality -->
+    <!-- <div class="helptext">Proper formatting is important. Values must be separated by a comma w/ no whitespace.</div> -->
+   <!--  <div id="custom-filters" class="container">
         <h2 id="label" class="left">Set keywords (or phrases) to filter here:</h2>
         <div class="right" id="extras">(<span id="toggle-example">see&nbsp;example</span>)&nbsp;(<span id="toggle-detail">more&nbspinfo</span>)</div>
         <textarea id="filters" cols="112" rows="15" placeholder="example: kittens,dickbutt,Javert,RIP ..."></textarea>
@@ -26,5 +37,5 @@
         <p id="reminder">Don't forget to save your changes!</p>
         <p id="detail">Filter operates on post titles using lazy/fuzzy comparison; Allows partial matches of words containing substrings. eg: "." matches "..."</p>
         <p id="example">Example Filters: kittens,dickbutt,Javert,RIP,test,ignore</p>
-    </div>
+    </div> -->
 </div>

@@ -7,6 +7,10 @@ body {
 
 a { cursor: pointer; }
 
+hr {
+    border: 1px solid #34373c;
+}
+
 button {
     cursor: pointer;
     font-weight: bold;

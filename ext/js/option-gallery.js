@@ -17,6 +17,15 @@ var GalleryOptions = {
     }
 }
 
+// Create a new filter html element
+function FilterTerm(str) {
+    var _parent = document.createElement('span');
+    _parent.className = 'filter-card shadow';
+    _parent.id = str;
+    _parent.appendChild(document.createTextNode(str));
+    return _parent;
+}
+
 function showExtraInfo() {
     var extraInfo;
     var reminder = $('#reminder');
@@ -74,6 +83,14 @@ function loadFilters() {
             alert('Loaded saved Filter(s)');
         }
     });
+    storage.get('filterArray', function(items) {
+        if (items.filterArray) {
+            var termList = $('#contains-term-list');
+            for (var i = items.filterArray.length - 1; i >= 0; i--) {
+                termList.append(new FilterTerm(items.filterArray[i]));
+            }
+        }
+    });
 }
 
 function resetFilters() {
@@ -91,9 +108,7 @@ function resetFilters() {
 
 function loadGallerySettings() {
     var container = $('#minimun-length');
-    console.log(container);
     for (var i = 2; i <= 10; i++) {
-        console.log(i);
         container.append('<option value='+i+'>'+i+'</option>');
     }
     // Load saved options state
