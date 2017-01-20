@@ -1,4 +1,5 @@
 var storage = chrome.storage.local;
+// TODO: implement feature :: make unchecked options disabled
 // TODO: new filter :: strict matching on whole words/tokens
 
 // Store tab operations in a Global scope variable
@@ -15,7 +16,6 @@ var GalleryOptions = {
         $('#submit-contains').on('click', saveFiltersContains);
         $('#reset-contains').on('click', resetFiltersContains);
         $('#toggle-detail').on('click', showExtraInfo);
-        // $('#toggle-example').on('click', showExtraInfo);
     }
 }
 
@@ -48,10 +48,6 @@ function showExtraInfo() {
             extraInfo = $('#detail');
             break
 
-        // case 'toggle-example':
-        //     extraInfo = $('#example');
-        //     break
-
         default:
             break  // fail silently
     }
@@ -75,16 +71,10 @@ function saveFiltersContains() {
         alert('No Filter(s) Specified!', true);
         return;
     }
-    // TODO: deprecate this call, we only really need the array.
-    // Save the data using the Chrome Extension API
-    // storage.set({'filterKeywords': textAreaData}, function() {
-    //     //Notify that we saved successfully
-    //     alert('Filter(s) saved');
-    // });
     var newTerms = textAreaData.split(',');
+    // TODO: ensure object to be saved is a valid object
     storage.get('filterArrayContains', function(items) {
         if (items.filterArrayContains) {
-            // TODO: ensure object to be saved is a valid object
             var uniqueTerms = items.filterArrayContains.concat(newTerms).unique();
             storage.set({'filterArrayContains': uniqueTerms}, function() {
                 textInput.val('');
@@ -101,30 +91,11 @@ function saveFiltersContains() {
             });
         }
     });
-    // var newArrayContainsUnique = filterArrayContains.concat(newTerms).unique();
-    // // TODO: ensure object to be saved is a valid object
-    // storage.set({'filterArrayContains': newArrayContainsUnique}, function() {
-    //     // Update local reference
-    //     // filterArrayContains = newArrayContainsUnique;
-    //     // Update DOM container
-    //     updateContainsCards();
-    //     // Notify user
-    //     alert('Filter(s) saved');
-    //     return;
-    // });
 }
 
 function loadFiltersContains() {
-    // storage.get('filterKeywords', function(items) {
-    //     if (items.filterKeywords) {
-    //         $('#filters').val(items.filterKeywords);
-    //         alert('Loaded saved Filter(s)');
-    //     }
-    // });
     storage.get('filterArrayContains', function(items) {
         if (items.filterArrayContains) {
-            // Update local reference
-            // filterArrayContains = items.filterArrayContains;
             // Update DOM container
             updateContainsCards();
             // Notify user
@@ -135,13 +106,7 @@ function loadFiltersContains() {
 }
 
 function resetFiltersContains() {
-    // Remove the saved values from storage
-    // storage.remove('filterKeywords', function(items) {
-    //     alert('Cleared saved filter(s) from local storage');
-    // });
     storage.remove('filterArrayContains', function(items) {
-        // Reset local reference
-        // filterArrayContains = [];
         // Empty the filter cards div
         $('#contains-term-list').empty();
         // Reset the textArea
@@ -178,7 +143,6 @@ function loadGallerySettings() {
                 .prop('selected',true);
         }
     });
-    // Load saved options state
     storage.get('filterByLength', function(items) {
         if (items.filterByLength) {
             $('#filter-by-length').prop('checked', items.filterByLength);

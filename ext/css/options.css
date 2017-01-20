@@ -90,17 +90,13 @@ a:focus { outline: 0!important; }
     margin: 0 5em;
 }
 
-/*#filters { font-size: 1.2em; }*/
-/*#btn-group { margin-top: 5px; padding-left: 10px; }*/
 #submit-contains:hover { color: #1BB76E!important; }
 #reset-contains:hover { color: #DB3535!important; }
 
 #alert {
-    /*margin-right: 15em;*/
     padding-top: 1em;
     text-align: right;
     height: 32px;
-    /*width: 30%;*/
 }
 
 #extra-info p {
@@ -116,8 +112,6 @@ a:focus { outline: 0!important; }
     font-style: italic;
 }
 
-/*#example { display: none; }*/
-/*#toggle-example { cursor: pointer; border-bottom: 1px dotted #1BB76E; }*/
 #detail { display: none; }
 #toggle-detail { cursor: pointer; border-bottom: 1px dotted #1BB76E; }
 #contactme { cursor: pointer; margin-top: 1.5em; }
