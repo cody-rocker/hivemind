@@ -185,8 +185,8 @@ function displayVersionNumber() {
 $(document).ready(function() {
     getPopupSettings();
     // Check that the user has defined some filters
-    storage.get('filterArray', function(items) {
-        if (items.filterArray) {
+    storage.get('filterArrayContains', function(items) {
+        if (items.filterArrayContains) {
             getHiddenPostsFromBg(function(blocklist) {
                 showHidden(blocklist);
             });

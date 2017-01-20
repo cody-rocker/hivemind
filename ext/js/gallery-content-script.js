@@ -17,9 +17,9 @@ function loadFilterArray() {
     //       both blacklist and whitelist, to filter or perhaps call additional
     //       attention to select users. perhaps with a content-script alert for
     //       either or both.
-    var filterStorage = storage.get('filterArray', function(items) {
-        if (items.filterArray)
-            activeFilters = items.filterArray;
+    var filterStorage = storage.get('filterArrayContains', function(items) {
+        if (items.filterArrayContains)
+            activeFilters = items.filterArrayContains;
             filterPage(activeFilters);
     });
 }

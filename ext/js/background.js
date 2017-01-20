@@ -1,4 +1,4 @@
-var storage = chrome.storage.local;
+// var storage = chrome.storage.local;
 var hiddenPosts = [];
 
 chrome.browserAction.setTitle({ title: "HiveMind" });

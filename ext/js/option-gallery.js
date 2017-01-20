@@ -6,19 +6,32 @@ var storage = chrome.storage.local;
 var GalleryOptions = {
     initialize: function() {
         loadGallerySettings();
-        loadFilters();
+        loadFiltersContains();
     },
     addEventListeners: function() {
+        $('#filter-by-length').on('click', updateFilterByLength);
+        $('#filter-by-contains').on('click', updateFilterByContains);
         $('#minimun-length').on('change', updateMinLength);
-        $('#submit').on('click', saveFilters);
-        $('#reset').on('click', resetFilters);
+        $('#submit-contains').on('click', saveFiltersContains);
+        $('#reset-contains').on('click', resetFiltersContains);
         $('#toggle-detail').on('click', showExtraInfo);
-        $('#toggle-example').on('click', showExtraInfo);
+        // $('#toggle-example').on('click', showExtraInfo);
     }
 }
 
+Array.prototype.unique = function() {
+    var a = this.concat();
+    for (var i = 0; i < a.length; ++i) {
+        for (var j = i + 1; j < a.length; ++j) {
+            if (a[i] === a[j])
+                a.splice(j--, 1);
+        }
+    }
+    return a;
+};
+
 // Create a new filter html element
-function FilterTerm(str) {
+function FilterCard(str) {
     var _parent = document.createElement('span');
     _parent.className = 'filter-card shadow';
     _parent.id = str;
@@ -35,9 +48,9 @@ function showExtraInfo() {
             extraInfo = $('#detail');
             break
 
-        case 'toggle-example':
-            extraInfo = $('#example');
-            break
+        // case 'toggle-example':
+        //     extraInfo = $('#example');
+        //     break
 
         default:
             break  // fail silently
@@ -52,61 +65,108 @@ function showExtraInfo() {
     });
 }
 
-function saveFilters() {
+function saveFiltersContains() {
     // TODO: validate and clean user input
     // Get the current data from the form.
-    var textAreaData = $('#filters').val();
+    var textInput = $('#add-term-contains');
+    var textAreaData = textInput.val();
     // Make sure it's not empty.
     if (!textAreaData) {
-        alert('Error :: No Filter(s) Specified!', true);
+        alert('No Filter(s) Specified!', true);
         return;
     }
     // TODO: deprecate this call, we only really need the array.
     // Save the data using the Chrome Extension API
-    storage.set({'filterKeywords': textAreaData}, function() {
-        //Notify that we saved successfully
-        alert('Filter(s) saved');
+    // storage.set({'filterKeywords': textAreaData}, function() {
+    //     //Notify that we saved successfully
+    //     alert('Filter(s) saved');
+    // });
+    var newTerms = textAreaData.split(',');
+    storage.get('filterArrayContains', function(items) {
+        if (items.filterArrayContains) {
+            // TODO: ensure object to be saved is a valid object
+            var uniqueTerms = items.filterArrayContains.concat(newTerms).unique();
+            storage.set({'filterArrayContains': uniqueTerms}, function() {
+                textInput.val('');
+                updateContainsCards();
+                alert('Filter(s) saved');
+                return;
+            });
+        } else {
+            storage.set({'filterArrayContains': newTerms}, function() {
+                textInput.val('');
+                updateContainsCards();
+                alert('Filter(s) saved');
+                return;
+            });
+        }
     });
-    var filterArray = textAreaData.split(',');
-    // TODO: ensure object to be saved is a valid object
-    storage.set({'filterArray': filterArray}, function() {
-        // console.log('filterArray saved with ' + filterArray.length + ' element(s).');
-        alert('Filter(s) saved');
-        return;
-    });
+    // var newArrayContainsUnique = filterArrayContains.concat(newTerms).unique();
+    // // TODO: ensure object to be saved is a valid object
+    // storage.set({'filterArrayContains': newArrayContainsUnique}, function() {
+    //     // Update local reference
+    //     // filterArrayContains = newArrayContainsUnique;
+    //     // Update DOM container
+    //     updateContainsCards();
+    //     // Notify user
+    //     alert('Filter(s) saved');
+    //     return;
+    // });
 }
 
-function loadFilters() {
-    storage.get('filterKeywords', function(items) {
-        if (items.filterKeywords) {
-            $('#filters').val(items.filterKeywords);
+function loadFiltersContains() {
+    // storage.get('filterKeywords', function(items) {
+    //     if (items.filterKeywords) {
+    //         $('#filters').val(items.filterKeywords);
+    //         alert('Loaded saved Filter(s)');
+    //     }
+    // });
+    storage.get('filterArrayContains', function(items) {
+        if (items.filterArrayContains) {
+            // Update local reference
+            // filterArrayContains = items.filterArrayContains;
+            // Update DOM container
+            updateContainsCards();
+            // Notify user
             alert('Loaded saved Filter(s)');
-        }
-    });
-    storage.get('filterArray', function(items) {
-        if (items.filterArray) {
-            var termList = $('#contains-term-list');
-            for (var i = items.filterArray.length - 1; i >= 0; i--) {
-                termList.append(new FilterTerm(items.filterArray[i]));
-            }
+            return;
         }
     });
 }
 
-function resetFilters() {
-    // Remove the saved value from storage
-    storage.remove('filterKeywords', function(items) {
-        alert('Cleared saved filter(s) from local storage');
-    });
-    storage.remove('filterArray', function(items) {
-        // successful operation callback
+function resetFiltersContains() {
+    // Remove the saved values from storage
+    // storage.remove('filterKeywords', function(items) {
+    //     alert('Cleared saved filter(s) from local storage');
+    // });
+    storage.remove('filterArrayContains', function(items) {
+        // Reset local reference
+        // filterArrayContains = [];
+        // Empty the filter cards div
+        $('#contains-term-list').empty();
+        // Reset the textArea
+        $('#add-term-contains').val('');
+        // Notify user
+        alert('All filters removed');
         return;
-    })
-    // Reset the textArea
-    $('#filters').val('');
+    });
+}
+
+function updateContainsCards() {
+    var termList = $('#contains-term-list');
+    storage.get('filterArrayContains', function(items) {
+        if (items.filterArrayContains) {
+            termList.empty();
+            for (var i = items.filterArrayContains.length - 1; i >= 0; i--) {
+                termList.append(new FilterCard(items.filterArrayContains[i]));
+            }
+            return;
+        }
+    });
 }
 
 function loadGallerySettings() {
+    // Populate dropdown select menu(s)
     var container = $('#minimun-length');
     for (var i = 2; i <= 10; i++) {
         container.append('<option value='+i+'>'+i+'</option>');
@@ -118,11 +178,42 @@ function loadGallerySettings() {
                 .prop('selected',true);
         }
     });
+    // Load saved options state
+    storage.get('filterByLength', function(items) {
+        if (items.filterByLength) {
+            $('#filter-by-length').prop('checked', items.filterByLength);
+        }
+    });
+    storage.get('filterByContains', function(items) {
+        if (items.filterByContains) {
+            $('#filter-by-contains').prop('checked', items.filterByContains);
+        }
+    });
+}
+
+function updateFilterByLength() {
+    var checkbox = $(this);
+    storage.set({
+        'filterByLength': checkbox.is(':checked')
+    }, function() {
+        // successful save callback
+        return;
+    });
 }
 
 function updateMinLength() {
     storage.set({
         'minLength': $(this).val()
+    }, function() {
+        // successful save callback
+        return;
+    });
+}
+
+function updateFilterByContains() {
+    var checkbox = $(this);
+    storage.set({
+        'filterByContains': checkbox.is(':checked')
     }, function() {
         // successful save callback
         return;
