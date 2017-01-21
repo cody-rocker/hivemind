@@ -70,9 +70,10 @@ function removeCard() {
             if (delIndex > -1) {
                 termArray.splice(delIndex, 1);
                 storage.set({'filterArrayContains': termArray}, function() {
-                    updateContainsCards();
-                    alert('Filter removed!', true);
-                    return;
+                    thisCard.fadeOut(500, function() {
+                        updateContainsCards();
+                        alert('Filter removed!', true);
+                    });
                 });
             }
         }
