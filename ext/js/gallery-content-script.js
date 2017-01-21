@@ -2,12 +2,26 @@
 //       the chrome dev console one day. It needs a lot of work to improve
 //       robustness, reliability and forward compatibility.
 var storage = chrome.storage.local;
-var activeFilters = [];
 var hiddenPosts = [];
+var filterByLength = false;
+var minLength = undefined;
+var filterByContains = false;
+var filterArrayContains = [];
 
+
+function waitForStorage() {
+    if (typeof loadedFilterByLength !== 'undefined' &&
+        typeof loadedMinLength !== 'undefined' &&
+        typeof loadedFilterByContains !== 'undefined' &&
+        typeof loadedFilterArrayContains !== 'undefined') {
+            filterPage(filterArrayContains);
+    } else {
+        setTimeout(waitForStorage, 250);
+    }
+}
 
 // load filters from storage (maybe background page in the future?)
-function loadFilterArray() {
+function loadFilterArrays() {
     // NOTE: this is a VERY alpha/prototype approach to filter handling/storage
     //       meant simply to get the basic functinality working.
     // TODO: prototype filter classes for more complex processing.
@@ -17,21 +31,56 @@ function loadFilterArray() {
     //       both blacklist and whitelist, to filter or perhaps call additional
     //       attention to select users. perhaps with a content-script alert for
     //       either or both.
-    var filterStorage = storage.get('filterArrayContains', function(items) {
-        if (items.filterArrayContains)
-            activeFilters = items.filterArrayContains;
-            filterPage(activeFilters);
+    storage.get('filterByLength', function(items) {
+        if (items.filterByLength) {
+            filterByLength = items.filterByLength;
+            loadedFilterByLength = true;
+            storage.get('minLength', function(items) {
+                if (items.minLength) {
+                    minLength = items.minLength;
+                    loadedMinLength = true;
+                } else {
+                    loadedMinLength = false;
+                }
+            });
+        } else {
+            loadedFilterByLength = false;
+            loadedMinLength = false;
+        }
     });
+    storage.get('filterByContains', function(items) {
+        if (items.filterByContains) {
+            filterByContains = items.filterByContains;
+            loadedFilterByContains = true;
+            storage.get('filterArrayContains', function(items) {
+                if (items.filterArrayContains) {
+                    filterArrayContains = items.filterArrayContains;
+                    loadedFilterArrayContains = true;
+                } else {
+                    loadedFilterArrayContains = false;
+                }
+            });
+        } else {
+            loadedFilterByContains = false;
+            loadedFilterArrayContains = false;
+        }
+    });
+    waitForStorage();
 }
 
 // pass the filterArray to the appropriate DOM function
 function filterPage(filterArray) {
+    // console.log("filter by length: " + filterByLength);
+    // console.log("min length: " + minLength);
+    // console.log("filter by contains: " + filterByContains);
+    // console.log("active filters: " + filterArrayContains);
     // TODO: this seems like a really dumb way to go about routing the logic.
     //       for a host of reasons, need stronger references to what page we're
     //       operating on.
     var postTitle = $('.post-title');  // will return empty array on Gallery
     if (postTitle.length === 0) {
-        filterGallery(filterArray);
+        if (filterByLength || filterByContains)
+            filterGallery(filterArray);
     } else {
         // filterPost(filterArray); // Just leave this disabled for now.
     }
@@ -55,23 +104,42 @@ function filterGallery(filterArray) {
             console.error($this);
             throw Error("Failed to fetch post metadata");
         }
+        if (filterByLength) {
+            if (postTitle.length < minLength) {
+                if ($this.style.display !== "none" && $this.className !== "hivemind") {
+                    // Hide the matched post div
+                    $this.style.display = "none";
+                    $($this).addClass('hivemind');
 
-        // does this title match any of the filter keywords?
-        if (matchTitle(filterArray, postTitle)) {
-            // Make sure this item wasn't already hidden in a previous scan
-            if ($this.style.display !== "none" && $this.className !== "hivemind") {
-                // Hide the matched post div
-                $this.style.display = "none";
-                $($this).addClass('hivemind');
+                    // NOTE: object schema is used to create the div objects in popup.
+                    // Add matched post to the hiddenPosts array
+                    hiddenPosts.push({
+                        id: $this.id,
+                        title: postTitle,
+                        postUrl: postUrl,
+                        imgUrl: imgUrl
+                    });
+                }
+            }
+        }
+        if (filterByContains) {
+            // does this title match any of the filter keywords?
+            if (matchTitle(filterArray, postTitle)) {
+                // Make sure this item wasn't already hidden in a previous scan
+                if ($this.style.display !== "none" && $this.className !== "hivemind") {
+                    // Hide the matched post div
+                    $this.style.display = "none";
+                    $($this).addClass('hivemind');
 
-                // NOTE: object schema is used to create the div objects in popup.
-                // Add matched post to the hiddenPosts array
-                hiddenPosts.push({
-                    id: $this.id,
-                    title: postTitle,
-                    postUrl: postUrl,
-                    imgUrl: imgUrl
-                });
+                    // NOTE: object schema is used to create the div objects in popup.
+                    // Add matched post to the hiddenPosts array
+                    hiddenPosts.push({
+                        id: $this.id,
+                        title: postTitle,
+                        postUrl: postUrl,
+                        imgUrl: imgUrl
+                    });
+                }
             }
         }
     });
@@ -148,7 +216,7 @@ function DOMModificationHandler() {
 function catchDOMUpdates() {
     // console.log("The DOM has been modified");
     removeDOMUpdateListener();
-    filterPage(activeFilters);
+    filterPage(filterArrayContains);
 }
 
 function addDOMUpdateListener() {
@@ -182,5 +250,5 @@ chrome.runtime.onMessage.addListener(
 //       is running it's async routines
 $(document).ready(function (jQuery) {
     // TODO: & THEN begin processing on page content after the DOM is populated.
-    loadFilterArray();
+    loadFilterArrays();
 });
