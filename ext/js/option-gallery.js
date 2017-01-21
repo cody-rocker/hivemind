@@ -16,6 +16,22 @@ var GalleryOptions = {
         $('#submit-contains').on('click', saveFiltersContains);
         $('#reset-contains').on('click', resetFiltersContains);
         $('#toggle-detail').on('click', showExtraInfo);
+        $('#add-term-contains').focus(function() {
+            console.log(this);
+            $('#contains-help').fadeIn();
+        });
+        $('#add-term-contains').focusout(function() {
+            console.log(this);
+            $('#contains-help').fadeOut();
+            if (!$(this).val().length)
+                $('#reminder').fadeOut();
+        });
+        $('#add-term-contains').keyup(function() {
+            if($(this).val().length)
+                $('#reminder').fadeIn();
+            else
+                $('#reminder').fadeOut();
+        });
     }
 }
 
@@ -32,31 +48,54 @@ Array.prototype.unique = function() {
 
 // Create a new filter html element
 function FilterCard(str) {
-    var _parent = document.createElement('span');
+    var _parent = document.createElement('div');
+    var _span = document.createElement('span');
+    _span.className = 'left rm-card-icon shadow';
+    _span.appendChild(document.createTextNode("x"));
     _parent.className = 'filter-card shadow';
     _parent.id = str;
+    _parent.appendChild(_span);
     _parent.appendChild(document.createTextNode(str));
+    $(_span).on('click', removeCard);
     return _parent;
 }
 
+// Remove this term from the filterArray
+function removeCard() {
+    var thisCard = $(this).parent();
+    storage.get('filterArrayContains', function(items) {
+        if (items.filterArrayContains) {
+            var termArray = items.filterArrayContains;
+            var delIndex = termArray.indexOf(thisCard.attr('id'));
+            if (delIndex > -1) {
+                termArray.splice(delIndex, 1);
+                storage.set({'filterArrayContains': termArray}, function() {
+                    updateContainsCards();
+                    alert('Filter removed!', true);
+                    return;
+                });
+            }
+        }
+    });
+}
+
 function showExtraInfo() {
-    var extraInfo;
-    var reminder = $('#reminder');
+    // var extraInfo;
     switch (this.id) {
 
         case 'toggle-detail':
-            extraInfo = $('#detail');
+            var extraInfo = $('#detail');
             break
 
         default:
             break  // fail silently
     }
-    reminder.siblings().hide();
-    reminder.slideUp(100);
-    extraInfo.slideDown(200, function() {
+    // reminder.siblings().hide();
+    // reminder.slideUp(100);
+    extraInfo.fadeIn(200, function() {
         setTimeout(function() {
-            extraInfo.hide();
-            reminder.slideDown(200);
+            extraInfo.fadeOut();
+            // reminder.slideDown(200);
         }, 5000);
     });
 }
@@ -77,16 +116,18 @@ function saveFiltersContains() {
         if (items.filterArrayContains) {
             var uniqueTerms = items.filterArrayContains.concat(newTerms).unique();
             storage.set({'filterArrayContains': uniqueTerms}, function() {
+                $('#reminder').fadeOut();
                 textInput.val('');
                 updateContainsCards();
-                alert('Filter(s) saved');
+                alert('Filter(s) added!');
                 return;
             });
         } else {
             storage.set({'filterArrayContains': newTerms}, function() {
+                $('#reminder').fadeOut();
                 textInput.val('');
                 updateContainsCards();
-                alert('Filter(s) saved');
+                alert('Filter(s) added!');
                 return;
             });
         }
@@ -99,7 +140,7 @@ function loadFiltersContains() {
             // Update DOM container
             updateContainsCards();
             // Notify user
-            alert('Loaded saved Filter(s)');
+            alert('Loaded saved Filter(s).');
             return;
         }
     });
@@ -112,7 +153,7 @@ function resetFiltersContains() {
         // Reset the textArea
         $('#add-term-contains').val('');
         // Notify user
-        alert('All filters removed');
+        alert('All filters cleared!', true);
         return;
     });
 }

@@ -106,13 +106,13 @@ a:focus { outline: 0!important; }
 }
 
 
-#reminder, #detail {
-    width: 80%;
+#reminder, #detail, #contains-help {
+    display: none;
+    width: 85%;
     font-size: 1.25em;
     font-style: italic;
 }
 
-#detail { display: none; }
 #toggle-detail { cursor: pointer; border-bottom: 1px dotted #1BB76E; }
 #contactme { cursor: pointer; margin-top: 1.5em; }
 #donate { margin-top: 1.5em; }
@@ -136,6 +136,19 @@ a:focus { outline: 0!important; }
 }
 
 .logo:hover { background-color: #50545c; }
+
+.rm-card-icon {
+    cursor: pointer;
+    font-weight: 1000;
+    margin-right: .5em;
+    padding: 0 .3em 0 .3em;
+    background-color: #50545c;
+    border-radius: 15px;
+}
+
+.rm-card-icon:hover {
+    color: #DB3535;
+}
 
 .support-link img, .support-link input[type="image"] {
     max-height: 9em;
@@ -172,8 +185,8 @@ a:focus { outline: 0!important; }
 .filter-card {
     font-weight: bold;
     display: inline-block;
-    margin: 5px;
-    padding: 5px 15px;
+    margin: .5em;
+    padding: .5em 1em .5em .5em;
     border-radius: 15px;
     background-color: #34373c;
 }
